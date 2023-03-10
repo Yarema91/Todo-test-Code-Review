@@ -1,0 +1,34 @@
+.modal {
+    z-index: 2;
+    translate: 100% 0;
+    height: 450px;
+    width: 500px;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;   
+    top: 25%;
+    left: 25%;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.modal.open{
+    z-index: 99;
+    translate: 0;
+    opacity: 1;
+    pointer-events: all;
+    background: white;
+}
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    margin: 20px;
+}
+
+.modalClose_btn{
+    margin-top: 20px;
+    width: 100px;
+}
+

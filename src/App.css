@@ -1,0 +1,122 @@
+.App {
+  text-align: center;
+  
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* App */
+
+.app{
+  background-color: rgb(218, 214, 214);
+  width: 100vw;
+  height: 100vh;
+}
+
+/* addtodo */
+.addtodo__form{
+display: flex;
+flex-direction: row;
+align-items: end;
+}
+
+.addtodo__list{
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  }
+
+.addtodo__item{
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.addtodo__btn{
+  height: 20px;
+  width: 70px;
+}
+
+/* TodoItem */
+.todoRenderItem{
+  display: flex;
+  flex-direction: row;
+}
+
+/* table */
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;  
+}
+
+th, td {
+  background-color: rgb(192, 190, 190);
+  width: 40px;  
+}
+
+.todoTable{
+  margin: 40px 0 0 60px;
+  width:60%;
+  word-break: break-all;
+  table-layout: fixed
+}
+
+.todoTable__title{
+  width: 100px;
+}
+
+.todoTable__status{
+  width: 40px;
+}
+
+.todoTable__description{
+  width: 200px;
+}
+.todoItem__row{
+  text-align: center;
+  cursor: pointer;
+}
+
+.errormessage{
+  color: red;
+  font-size: 12px;
+}
+
+.addtodoInput__error{
+  border: 1px solid red;
+}
+
