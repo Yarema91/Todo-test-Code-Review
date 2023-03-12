@@ -1,67 +1,78 @@
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../api/hooks";
+import { useState, useRef } from "react";
+import { useAppDispatch } from "../api/hooks";
 import { getTodoItem } from "../store/todoSlice";
 
 export const AddTodo = () => {
   const dispatch = useAppDispatch();
-  const [titleValue, setTitleValue] = useState("");
-  const [descriptionValue, setDescriptionValue] = useState("");
-  const { todoList, isDescriptionFilled, isTitleFilled } = useAppSelector(
-    (state: { todolist: any }) => state.todolist
-  );
-  const id = todoList.length + 1;
-  const passTodoToStore = () => {
-    dispatch(getTodoItem({ titleValue, descriptionValue, id }));
-    setTitleValue("");
-    setDescriptionValue("");
+
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+
+  const [validationError, setValidationError] = useState({
+    isTitleFilled: true,
+    isDescriptionFilled: true,
+  });
+
+  const addTodoToStore = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    const titleValue = titleRef.current?.value.trim() || "";
+    const descriptionValue = descriptionRef.current?.value.trim() || "";
+    const id = Math.floor(Math.random() * 10000) + 1;
+
+    const validationState = {
+      isTitleFilled: !!titleValue,
+      isDescriptionFilled: !!descriptionValue,
+    };
+    setValidationError(validationState);
+
+    if (titleValue && descriptionValue) {
+      dispatch(
+        getTodoItem({ titleValue, descriptionValue, id, status: false })
+      );
+
+      if (titleRef.current) {
+        titleRef.current.value = "";
+      }
+      if (descriptionRef.current) {
+        descriptionRef.current.value = "";
+      }
+    }
   };
 
   return (
     <>
-      <div className="addtodo__form">
-        <h1 hidden>AddTodo</h1>
-        <ul className="addtodo__list">
-          <li className="addtodo__item">
-            <h3>Title</h3>
-            <input
-              type="text"
-              id="title-task"
-              placeholder="Enter title"
-              className={`${!isTitleFilled && "addtodoInput__error"}`}
-              value={titleValue}
-              onChange={(e: { target: { value: any } }) =>
-                setTitleValue(e.target.value)
-              }
-            />
-            {!isTitleFilled && (
-              <span className="errormessage">This field is empty</span>
-            )}
-          </li>
-          <li className="addtodo__item">
-            <h3>Description</h3>
-            <input
-              type="text"
-              id="desription-task"
-              placeholder="Enter description"
-              className={`${!isDescriptionFilled && "addtodoInput__error"}`}
-              value={descriptionValue}
-              onChange={(e: { target: { value: any } }) =>
-                setDescriptionValue(e.target.value)
-              }
-            />
-            {!isDescriptionFilled && (
-              <span className="errormessage">This field is empty</span>
-            )}
-          </li>
-        </ul>
-        <button
-          type="button"
-          className="addtodo__btn"
-          onClick={() => passTodoToStore()}
-        >
+      <form className="addtodo__form" onSubmit={addTodoToStore}>
+        <label>Title</label>
+        <input
+          type="text"
+          id="title-task"
+          placeholder="Enter title"
+          className={`${
+            !validationError.isTitleFilled && "addtodoInput__error"
+          }`}
+          ref={titleRef}
+        />
+        {!validationError.isTitleFilled && (
+          <span className="errormessage">This field is empty</span>
+        )}
+        <label>Description</label>
+        <input
+          type="text"
+          id="desription-task"
+          placeholder="Enter description"
+          className={`${
+            !validationError.isDescriptionFilled && "addtodoInput__error"
+          }`}
+          ref={descriptionRef}
+        />
+        {!validationError.isDescriptionFilled && (
+          <span className="errormessage">This field is empty</span>
+        )}
+        <button type="submit" className="addtodo__btn">
           Create
         </button>
-      </div>
+      </form>
     </>
   );
 };

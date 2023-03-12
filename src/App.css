@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  
 }
 
 .App-logo {
@@ -38,85 +37,91 @@
   }
 }
 
-/* App */
-
-.app{
+body {
   background-color: rgb(218, 214, 214);
+}
+
+.modal-body {
+  background-color: rgb(249, 249, 249);
+  width: fit-content;
+  margin: auto;
+  padding: 20px;
+  flex-direction: column;
+  align-items: first baseline;
+  z-index: 2;
+}
+.modalClose_btn {
+  margin-top: 10px;
+}
+/* App */
+.app {
   width: 100vw;
   height: 100vh;
 }
 
 /* addtodo */
-.addtodo__form{
-display: flex;
-flex-direction: row;
-align-items: end;
-}
-
-.addtodo__list{
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-  }
-
-.addtodo__item{
+.addtodo__form {
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  align-items: start;
+  justify-content: center;
 }
 
-.addtodo__btn{
-  height: 20px;
-  width: 70px;
+.addtodo__btn {
+  /* height: 20px;
+  width: 70px; */
+  margin-top: 10px;
 }
 
 /* TodoItem */
-.todoRenderItem{
+.todoRenderItem {
   display: flex;
   flex-direction: row;
 }
 
 /* table */
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid white;
-  border-collapse: collapse;  
+  border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   background-color: rgb(192, 190, 190);
-  width: 40px;  
-}
-
-.todoTable{
-  margin: 40px 0 0 60px;
-  width:60%;
-  word-break: break-all;
-  table-layout: fixed
-}
-
-.todoTable__title{
-  width: 100px;
-}
-
-.todoTable__status{
   width: 40px;
 }
 
-.todoTable__description{
+.todoTable {
+  margin: 40px 0 0 60px;
+  width: 60%;
+  word-break: break-all;
+  table-layout: fixed;
+}
+
+.todoTable__title {
+  width: 100px;
+}
+
+.todoTable__status {
+  width: 40px;
+}
+
+.todoTable__description {
   width: 200px;
 }
-.todoItem__row{
+.todoItem__row {
   text-align: center;
   cursor: pointer;
 }
 
-.errormessage{
+.errormessage {
   color: red;
   font-size: 12px;
 }
 
-.addtodoInput__error{
+.addtodoInput__error {
   border: 1px solid red;
 }
-

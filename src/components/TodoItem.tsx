@@ -1,51 +1,46 @@
 import { TodoTypes } from "../types/types";
-import { useState } from "react";
-import { Modal } from "./Modal/Modal";
+import { updateTodoStatus } from "../store/todoSlice";
+import { useAppDispatch } from "../api/hooks";
+import React from "react";
 
-export const TodoItem: React.FC<TodoTypes> = ({
-  id,
-  titleValue,
-  descriptionValue,
-}) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [checked, setChecked] = useState(false); 
+interface TodoItemProps {
+  todo: TodoTypes;
+  onTodoClick: (id: number) => void;
+  selectedTodo: TodoTypes | null;
+}
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+export const TodoItem: React.FC<TodoItemProps> = React.memo(
+  ({ todo, onTodoClick, selectedTodo }) => {
+    const dispatch = useAppDispatch();
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+    const { id, titleValue, descriptionValue } = todo;
 
-  function statusDone(event: any) {
-    setChecked(!checked)    
+    const handleTodoClick = () => {
+      onTodoClick(todo.id);
+    };
+
+    function statusDone(e: any) {
+      if (!selectedTodo || selectedTodo.id !== todo.id) {
+        dispatch(updateTodoStatus({ id: todo.id, status: e.target.checked }));
+      }
+      e.stopPropagation();
+    }
+
+    return (
+      <>
+        <tr onClick={handleTodoClick}>
+          <td className="todoItem__row">{id}</td>
+          <td className="todoItem__row">{titleValue}</td>
+          <td className="todoItem__row">{descriptionValue}</td>
+          <td className="todoItem__row" onClick={(e) => e.stopPropagation()}>
+            <input
+              type="checkbox"
+              onChange={statusDone}
+              checked={todo.status}
+            />
+          </td>
+        </tr>
+      </>
+    );
   }
-
-  return (
-    <>
-      <tr onClick={openModal}>
-        <td className="todoItem__row">{id}</td>
-        <td className="todoItem__row">{titleValue}</td>
-        <td className="todoItem__row">{descriptionValue}</td>
-        <td className="todoItem__row">
-          <input type="checkbox"  onChange={statusDone} />
-        </td>
-      </tr>
-
-      <Modal isModalOpen={isModalOpen}>
-        <>
-        <div className="modal-body">
-          <h1>Title: {titleValue}</h1>
-          <h2>Description:</h2>
-          <p>{descriptionValue}</p>
-          <div className="modal__status">
-            <span>Status: {checked? "Done": "Need to do"}</span>
-          </div>
-          <button onClick={closeModal} className='modalClose_btn'>Close Modal</button>
-          </div>
-        </>
-      </Modal>
-    </>
-  );
-};
+);
